@@ -1,0 +1,127 @@
+set nocompatible
+filetype off
+
+" let g:airline_theme='gruvbox'
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'preservim/nerdtree'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'morhetz/gruvbox'
+
+call vundle#end()
+filetype plugin indent on
+
+" NERDTree
+" autocmd vimenter * NERDTree
+nmap <Leader>n :NERDTreeToggle<CR>
+
+
+syntax on
+set number
+set relativenumber
+set tabstop=4
+set shiftwidth=4
+" set textwidth=80
+set autoindent
+" set smartindent
+set wrap
+set linebreak
+set cursorline
+" let &colorcolumn=join(range(81,999), ",")
+" highlight ColorColumn ctermbg=236
+set colorcolumn=81
+
+noremap <silent> k gk
+noremap <silent> j gj
+noremap <silent> 0 g0
+noremap <silent> $ g$
+
+" Color theme
+let g:gruvbox_italic=1
+let g:gruvbox_invert_selection=0
+let g:gruvbox_contrast_dark='hard'
+let g:gruvbox_color_column='bg1'
+"autocmd vimenter * colorscheme gruvbox
+colorscheme gruvbox
+set background=dark
+set termguicolors
+
+let g:airline#extensions#tabline#enabled = 1
+
+" File explorer
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+
+" Window changing keys
+nmap <C-H> <C-W>h
+nmap <C-L> <C-W>l
+nmap <C-K> <C-W>k
+nmap <C-J> <C-W>j
+tnoremap <C-H> <C-W>h
+tnoremap <C-L> <C-W>l
+tnoremap <C-K> <C-W>k
+tnoremap <C-J> <C-W>j
+
+set splitright
+
+nmap <localleader>o o<Enter><Enter><Esc>ki
+
+function CursorChar()
+	return matchstr(getline('.'), '\%' . col('.') . 'c.')
+endfunction
+
+function PrevChar()
+	return matchstr(getline('.'), '\%' . (col('.') - 1) . 'c.')
+endfunction
+
+function IsBracketBlock(c)
+	let matching = ""
+	if a:c == "}"
+		let matching = "{"
+	elseif a:c == ")"
+		let matching = "("
+	elseif a:c == "]"
+		let matching = "["
+	endif
+	return matching != "" && (CursorChar() == a:c && PrevChar() == matching)
+endfunction
+
+function IsBracketBlockAny()
+	return IsBracketBlock("}") || IsBracketBlock(")") || IsBracketBlock("]")
+endfunction
+
+inoremap <expr> <Enter> IsBracketBlockAny() ? '<Enter><Enter><Esc>ki<Tab>' : '<Enter>'
+
+augroup filetype_r
+	autocmd!
+	autocmd filetype r set nowrap
+	autocmd filetype r nmap <localleader>q :qa!<Enter>
+	autocmd filetype r set shell=R
+	autocmd filetype r nmap <localleader>t :vertical terminal<Enter><C-W>h
+	autocmd filetype r nmap <localleader>r yy<C-W>l<C-W>"0<C-W>h
+	autocmd filetype r vmap <localleader>r y<C-W>l<C-W>"0<C-W>h
+	autocmd filetype r nmap <localleader>s :let @"=@%<Enter><C-W>lsource("<C-W>"0")<Enter><C-W>h
+	autocmd filetype r nmap <localleader>c :normal I# <Esc>^
+	autocmd filetype r nmap <localleader>u ^xx
+	autocmd filetype r nmap <localleader>p :let @"=expand("<cword>")<Enter><C-W>lprint(<C-W>"0)<Enter><C-W>h
+	autocmd filetype r nmap <localleader>h :let @"=expand("<cword>")<Enter><C-W>lhead(<C-W>"0)<Enter><C-W>h
+	" autocmd filetype r imap { {}<Esc>i
+	autocmd filetype r imap <expr> { CursorChar() == "" ? '{}<Esc>i' : '{'
+	autocmd filetype r imap <expr> ( CursorChar() == "" ? '()<Esc>i' : '('
+	autocmd filetype r imap <expr> [ CursorChar() == "" ? '[]<Esc>i' : '['
+augroup END
+
+augroup filetype_julia
+	autocmd!
+	autocmd filetype julia set shell=julia
+	autocmd filetype julia nmap <localleader>t :vertical terminal<Enter><C-W>h
+	autocmd filetype julia nmap <localleader>s :let @"=@%<Enter><C-W>linclude("<C-W>"0")<Enter><C-W>h
+	autocmd filetype julia nmap <localleader>q :qa!<Enter>
+augroup END
+
+
