@@ -12,6 +12,7 @@ Plugin 'preservim/nerdtree'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'morhetz/gruvbox'
+Plugin 'preservim/nerdcommenter'
 
 call vundle#end()
 filetype plugin indent on
@@ -20,6 +21,8 @@ filetype plugin indent on
 " autocmd vimenter * NERDTree
 nmap <Leader>n :NERDTreeToggle<CR>
 
+" NERDCommenter
+let g:NERDSpaceDelims = 1
 
 syntax on
 set number
@@ -35,6 +38,7 @@ set cursorline
 " let &colorcolumn=join(range(81,999), ",")
 " highlight ColorColumn ctermbg=236
 set colorcolumn=81
+set noswapfile
 
 noremap <silent> k gk
 noremap <silent> j gj
@@ -53,10 +57,6 @@ set termguicolors
 
 let g:airline#extensions#tabline#enabled = 1
 
-" File explorer
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-
 " Window changing keys
 nmap <C-H> <C-W>h
 nmap <C-L> <C-W>l
@@ -68,8 +68,6 @@ tnoremap <C-K> <C-W>k
 tnoremap <C-J> <C-W>j
 
 set splitright
-
-nmap <localleader>o o<Enter><Enter><Esc>ki
 
 function CursorChar()
 	return matchstr(getline('.'), '\%' . col('.') . 'c.')
@@ -106,8 +104,6 @@ augroup filetype_r
 	autocmd filetype r nmap <localleader>r yy<C-W>l<C-W>"0<C-W>h
 	autocmd filetype r vmap <localleader>r y<C-W>l<C-W>"0<C-W>h
 	autocmd filetype r nmap <localleader>s :let @"=@%<Enter><C-W>lsource("<C-W>"0")<Enter><C-W>h
-	autocmd filetype r nmap <localleader>c :normal I# <Esc>^
-	autocmd filetype r nmap <localleader>u ^xx
 	autocmd filetype r nmap <localleader>p :let @"=expand("<cword>")<Enter><C-W>lprint(<C-W>"0)<Enter><C-W>h
 	autocmd filetype r nmap <localleader>h :let @"=expand("<cword>")<Enter><C-W>lhead(<C-W>"0)<Enter><C-W>h
 	" autocmd filetype r imap { {}<Esc>i
