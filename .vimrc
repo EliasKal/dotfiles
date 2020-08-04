@@ -56,6 +56,7 @@ set background=dark
 set termguicolors
 
 let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 
 " Window changing keys
 nmap <C-H> <C-W>h
