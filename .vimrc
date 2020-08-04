@@ -99,6 +99,15 @@ endfunction
 
 inoremap <expr> <Enter> IsBracketBlockAny() ? '<Enter><Enter><Esc>ki<Tab>' : '<Enter>'
 
+augroup filetype_md
+	autocmd!
+	autocmd filetype markdown set wrap
+	autocmd filetype markdown set cc=
+	autocmd filetype markdown syn region math start=/\$\$/ end=/\$\$/
+	autocmd filetype markdown syn match math '\$[^$].\{-}\$'
+	autocmd filetype markdown hi link math Statement
+augroup END
+
 augroup filetype_r
 	autocmd!
 	autocmd filetype r set nowrap
