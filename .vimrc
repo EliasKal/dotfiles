@@ -39,6 +39,9 @@ set cursorline
 " highlight ColorColumn ctermbg=236
 set colorcolumn=81
 set noswapfile
+set hlsearch
+set incsearch
+set ignorecase
 
 noremap <silent> k gk
 noremap <silent> j gj
