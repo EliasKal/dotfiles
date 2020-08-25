@@ -53,6 +53,7 @@ let g:gruvbox_italic=1
 let g:gruvbox_invert_selection=0
 let g:gruvbox_contrast_dark='hard'
 let g:gruvbox_color_column='bg1'
+let g:gruvbox_guisp_fallback='bg'	" enable spell check highlight
 "autocmd vimenter * colorscheme gruvbox
 colorscheme gruvbox
 set background=dark
@@ -102,6 +103,7 @@ inoremap <expr> <Enter> IsBracketBlockAny() ? '<Enter><Enter><Esc>ki<Tab>' : '<E
 augroup filetype_md
 	autocmd!
 	autocmd filetype markdown set wrap
+	autocmd filetype markdown set spell
 	autocmd filetype markdown set cc=
 	autocmd filetype markdown syn region math start=/\$\$/ end=/\$\$/
 	autocmd filetype markdown syn match math '\$[^$].\{-}\$'
