@@ -127,6 +127,7 @@ augroup filetype_r
 	autocmd filetype r imap <expr> { CursorChar() == "" ? '{}<Esc>i' : '{'
 	autocmd filetype r imap <expr> ( CursorChar() == "" ? '()<Esc>i' : '('
 	autocmd filetype r imap <expr> [ CursorChar() == "" ? '[]<Esc>i' : '['
+	autocmd filetype r tnoremap <localleader><Esc> <C-\><C-n>
 augroup END
 
 augroup filetype_julia
