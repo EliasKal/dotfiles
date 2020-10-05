@@ -32,7 +32,7 @@ set shiftwidth=4
 " set textwidth=80
 set autoindent
 " set smartindent
-set wrap
+set nowrap
 set linebreak
 set cursorline
 " let &colorcolumn=join(range(81,999), ",")
@@ -108,6 +108,8 @@ augroup filetype_md
 	autocmd filetype markdown syn region math start=/\$\$/ end=/\$\$/
 	autocmd filetype markdown syn match math '\$[^$].\{-}\$'
 	autocmd filetype markdown hi link math Statement
+	autocmd filetype markdown set shell=bash
+	autocmd filetype markdown nmap <localleader>t :vertical terminal<Enter><C-W>h
 augroup END
 
 augroup filetype_r
@@ -135,4 +137,8 @@ augroup filetype_julia
 	autocmd filetype julia nmap <localleader>q :qa!<Enter>
 augroup END
 
+augroup filetype_html
+	autocmd!
+	autocmd filetype html nnoremap <localleader>html :-1read $HOME/dotfiles/templates/html.tmpl<CR>3jwf>a
+augroup END
 
