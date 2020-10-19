@@ -32,7 +32,8 @@ set shiftwidth=4
 " set textwidth=80
 set autoindent
 " set smartindent
-set wrap
+set cindent
+set nowrap
 set linebreak
 set cursorline
 " let &colorcolumn=join(range(81,999), ",")
@@ -119,12 +120,13 @@ augroup filetype_r
 	autocmd filetype r nmap <localleader>r yy<C-W>l<C-W>"0<C-W>h
 	autocmd filetype r vmap <localleader>r y<C-W>l<C-W>"0<C-W>h
 	autocmd filetype r nmap <localleader>s :let @"=@%<Enter><C-W>lsource("<C-W>"0")<Enter><C-W>h
-	autocmd filetype r nmap <localleader>p :let @"=expand("<cword>")<Enter><C-W>lprint(<C-W>"0)<Enter><C-W>h
+	autocmd filetype r nmap <localleader>p :let @"=expand("<cword>")<Enter><C-W>l<C-W>"0<Enter><C-W>h
 	autocmd filetype r nmap <localleader>h :let @"=expand("<cword>")<Enter><C-W>lhead(<C-W>"0)<Enter><C-W>h
 	" autocmd filetype r imap { {}<Esc>i
 	autocmd filetype r imap <expr> { CursorChar() == "" ? '{}<Esc>i' : '{'
 	autocmd filetype r imap <expr> ( CursorChar() == "" ? '()<Esc>i' : '('
 	autocmd filetype r imap <expr> [ CursorChar() == "" ? '[]<Esc>i' : '['
+	autocmd filetype r tnoremap <localleader><Esc> <C-\><C-n>
 augroup END
 
 augroup filetype_julia
