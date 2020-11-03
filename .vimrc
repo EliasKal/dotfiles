@@ -32,7 +32,6 @@ set shiftwidth=4
 " set textwidth=80
 set autoindent
 " set smartindent
-set cindent
 set nowrap
 set linebreak
 set cursorline
@@ -101,6 +100,8 @@ endfunction
 
 inoremap <expr> <Enter> IsBracketBlockAny() ? '<Enter><Enter><Esc>ki<Tab>' : '<Enter>'
 
+tnoremap <localleader><Esc> <C-\><C-n>
+
 augroup filetype_md
 	autocmd!
 	autocmd filetype markdown set wrap
@@ -109,6 +110,8 @@ augroup filetype_md
 	autocmd filetype markdown syn region math start=/\$\$/ end=/\$\$/
 	autocmd filetype markdown syn match math '\$[^$].\{-}\$'
 	autocmd filetype markdown hi link math Statement
+	autocmd filetype markdown set shell=bash
+	autocmd filetype markdown nmap <localleader>t :vertical terminal<Enter><C-W>h
 augroup END
 
 augroup filetype_r
@@ -126,7 +129,7 @@ augroup filetype_r
 	autocmd filetype r imap <expr> { CursorChar() == "" ? '{}<Esc>i' : '{'
 	autocmd filetype r imap <expr> ( CursorChar() == "" ? '()<Esc>i' : '('
 	autocmd filetype r imap <expr> [ CursorChar() == "" ? '[]<Esc>i' : '['
-	autocmd filetype r tnoremap <localleader><Esc> <C-\><C-n>
+	" autocmd filetype r tnoremap <localleader><Esc> <C-\><C-n>
 augroup END
 
 augroup filetype_julia
@@ -137,4 +140,8 @@ augroup filetype_julia
 	autocmd filetype julia nmap <localleader>q :qa!<Enter>
 augroup END
 
+augroup filetype_html
+	autocmd!
+	autocmd filetype html nnoremap <localleader>html :-1read $HOME/dotfiles/templates/html.tmpl<CR>3jwf>a
+augroup END
 
