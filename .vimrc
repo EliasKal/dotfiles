@@ -132,6 +132,41 @@ augroup filetype_r
 	" autocmd filetype r tnoremap <localleader><Esc> <C-\><C-n>
 augroup END
 
+augroup filetype_rmd
+	autocmd!
+	autocmd filetype rmd set wrap
+	autocmd filetype rmd nmap <localleader>q :qa!<Enter>
+	autocmd filetype rmd set shell=R
+	autocmd filetype rmd nmap <localleader>t :vertical terminal<Enter><C-W>h
+	autocmd filetype rmd nnoremap <localleader>rmd :-1read $HOME/dotfiles/templates/rmd.tmpl<CR>jwwa
+	autocmd filetype rmd nmap <localleader>s :let @"=@%<Enter><C-W>lrmarkdown::render("<C-W>"0", output_dir = "output")<Enter><C-W>h
+	autocmd filetype rmd nnoremap <localleader>rc :-1read $HOME/dotfiles/templates/rmd_chunk.tmpl<CR>ji
+augroup END
+
+augroup filetype_sql
+	autocmd!
+	autocmd filetype sql set nowrap
+	autocmd filetype sql nmap <localleader>q :qa!<Enter>
+	autocmd filetype sql set shell=bash
+	autocmd filetype sql nmap <localleader>t :vertical terminal<Enter>psql mimic elias<Enter><C-W>h
+	autocmd filetype sql nmap <localleader>r yy<C-W>l<C-W>"0<C-W>h
+	autocmd filetype sql vmap <localleader>r y<C-W>l<C-W>"0<C-W>h
+	autocmd filetype sql nmap <localleader>s :let @"=@%<Enter><C-W>lexec(open("<C-W>"0").read())<Enter><C-W>h
+	autocmd filetype sql nmap <localleader>p :let @"=expand("<cword>")<Enter><C-W>l<C-W>"0<Enter><C-W>h
+augroup END
+
+augroup filetype_python
+	autocmd!
+	autocmd filetype python set nowrap
+	autocmd filetype python nmap <localleader>q :qa!<Enter>
+	autocmd filetype python set shell=python
+	autocmd filetype python nmap <localleader>t :vertical terminal<Enter><C-W>h
+	autocmd filetype python nmap <localleader>r yy<C-W>l<C-W>"0<C-W>h
+	autocmd filetype python vmap <localleader>r y<C-W>l<C-W>"0<C-W>h
+	autocmd filetype python nmap <localleader>s :let @"=@%<Enter><C-W>lexec(open("<C-W>"0").read())<Enter><C-W>h
+	autocmd filetype python nmap <localleader>p :let @"=expand("<cword>")<Enter><C-W>l<C-W>"0<Enter><C-W>h
+augroup END
+
 augroup filetype_julia
 	autocmd!
 	autocmd filetype julia set shell=julia
