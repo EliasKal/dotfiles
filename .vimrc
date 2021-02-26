@@ -151,8 +151,8 @@ augroup filetype_sql
 	autocmd filetype sql nmap <localleader>t :vertical terminal<Enter>psql mimic elias<Enter><C-W>h
 	autocmd filetype sql nmap <localleader>r yy<C-W>l<C-W>"0<C-W>h
 	autocmd filetype sql vmap <localleader>r y<C-W>l<C-W>"0<C-W>h
-	autocmd filetype sql nmap <localleader>s :let @"=@%<Enter><C-W>lexec(open("<C-W>"0").read())<Enter><C-W>h
-	autocmd filetype sql nmap <localleader>p :let @"=expand("<cword>")<Enter><C-W>l<C-W>"0<Enter><C-W>h
+	autocmd filetype sql nmap <localleader>s :let @"=@%<Enter><C-W>l\include <C-W>"0<Enter><C-W>h
+	autocmd filetype sql nmap <localleader>p :let @"=expand("<cword>")<Enter><C-W>lSELECT * FROM <C-W>"0 LIMIT 10;<Enter><C-W>h
 augroup END
 
 augroup filetype_python
