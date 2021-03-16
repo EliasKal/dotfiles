@@ -132,6 +132,24 @@ augroup filetype_r
 	" autocmd filetype r tnoremap <localleader><Esc> <C-\><C-n>
 augroup END
 
+augroup filetype_r
+	autocmd!
+	autocmd filetype r set nowrap
+	autocmd filetype r nmap <localleader>q :qa!<Enter>
+	autocmd filetype r set shell=R
+	autocmd filetype r nmap <localleader>t :vertical terminal<Enter><C-W>h
+	autocmd filetype r nmap <localleader>r yy<C-W>l<C-W>"0<C-W>h
+	autocmd filetype r vmap <localleader>r y<C-W>l<C-W>"0<C-W>h
+	autocmd filetype r nmap <localleader>s :let @"=@%<Enter><C-W>lsource("<C-W>"0")<Enter><C-W>h
+	autocmd filetype r nmap <localleader>p :let @"=expand("<cword>")<Enter><C-W>l<C-W>"0<Enter><C-W>h
+	autocmd filetype r nmap <localleader>h :let @"=expand("<cword>")<Enter><C-W>lhead(<C-W>"0)<Enter><C-W>h
+	" autocmd filetype r imap { {}<Esc>i
+	autocmd filetype r imap <expr> { CursorChar() == "" ? '{}<Esc>i' : '{'
+	autocmd filetype r imap <expr> ( CursorChar() == "" ? '()<Esc>i' : '('
+	autocmd filetype r imap <expr> [ CursorChar() == "" ? '[]<Esc>i' : '['
+	" autocmd filetype r tnoremap <localleader><Esc> <C-\><C-n>
+augroup END
+
 augroup filetype_rmd
 	autocmd!
 	autocmd filetype rmd set wrap
@@ -140,6 +158,8 @@ augroup filetype_rmd
 	autocmd filetype rmd nmap <localleader>t :vertical terminal<Enter><C-W>h
 	autocmd filetype rmd nnoremap <localleader>rmd :-1read $HOME/dotfiles/templates/rmd.tmpl<CR>jwwa
 	autocmd filetype rmd nmap <localleader>s :let @"=@%<Enter><C-W>lrmarkdown::render("<C-W>"0", output_dir = "output")<Enter><C-W>h
+	autocmd filetype rmd nmap <localleader>r yy<C-W>l<C-W>"0<C-W>h
+	autocmd filetype rmd vmap <localleader>r y<C-W>l<C-W>"0<C-W>h
 	autocmd filetype rmd nnoremap <localleader>rc :-1read $HOME/dotfiles/templates/rmd_chunk.tmpl<CR>ji
 augroup END
 
