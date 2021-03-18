@@ -173,6 +173,7 @@ augroup filetype_sql
 	autocmd filetype sql vmap <localleader>r y<C-W>l<C-W>"0<C-W>h
 	autocmd filetype sql nmap <localleader>s :let @"=@%<Enter><C-W>l\include <C-W>"0<Enter><C-W>h
 	autocmd filetype sql nmap <localleader>p :let @"=expand("<cword>")<Enter><C-W>lSELECT * FROM <C-W>"0 LIMIT 10;<Enter><C-W>h
+	autocmd filetype sql nnoremap <localleader>v :-1read $HOME/dotfiles/templates/sql_create_view.tmpl<CR>4w
 augroup END
 
 augroup filetype_python
