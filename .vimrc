@@ -105,7 +105,7 @@ tnoremap <localleader><Esc> <C-\><C-n>
 augroup filetype_md
 	autocmd!
 	autocmd filetype markdown set wrap
-	autocmd filetype markdown set spell
+	autocmd filetype markdown setlocal spell spelllang=en,el
 	autocmd filetype markdown set cc=
 	autocmd filetype markdown syn region math start=/\$\$/ end=/\$\$/
 	autocmd filetype markdown syn match math '\$[^$].\{-}\$'
@@ -153,6 +153,7 @@ augroup END
 augroup filetype_rmd
 	autocmd!
 	autocmd filetype rmd set wrap
+	autocmd filetype rmd setlocal spell spelllang=en,el
 	autocmd filetype rmd nmap <localleader>q :qa!<Enter>
 	autocmd filetype rmd set shell=R
 	autocmd filetype rmd nmap <localleader>t :vertical terminal<Enter><C-W>h
