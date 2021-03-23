@@ -169,7 +169,7 @@ augroup filetype_sql
 	autocmd filetype sql set nowrap
 	autocmd filetype sql nmap <localleader>q :qa!<Enter>
 	autocmd filetype sql set shell=bash
-	autocmd filetype sql nmap <localleader>t :vertical terminal<Enter>psql mimic elias<Enter><C-W>h
+	autocmd filetype sql nmap <localleader>t :vertical terminal<Enter>psql "dbname=mimic user=elias options=--search_path=mimiciii"<Enter><C-W>h
 	autocmd filetype sql nmap <localleader>r yy<C-W>l<C-W>"0<C-W>h
 	autocmd filetype sql vmap <localleader>r y<C-W>l<C-W>"0<C-W>h
 	autocmd filetype sql nmap <localleader>s :let @"=@%<Enter><C-W>l\include <C-W>"0<Enter><C-W>h
