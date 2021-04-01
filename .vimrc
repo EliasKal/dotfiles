@@ -159,9 +159,10 @@ augroup filetype_rmd
 	autocmd filetype rmd nmap <localleader>t :vertical terminal<Enter><C-W>h
 	autocmd filetype rmd nnoremap <localleader>rmd :-1read $HOME/dotfiles/templates/rmd.tmpl<CR>jwwa
 	autocmd filetype rmd nmap <localleader>s :let @"=@%<Enter><C-W>lrmarkdown::render("<C-W>"0", output_dir = "output")<Enter><C-W>h
-	autocmd filetype rmd nmap <localleader>r yy<C-W>l<C-W>"0<C-W>h
+	autocmd filetype rmd nmap <localleader>rr yy<C-W>l<C-W>"0<C-W>h
+	autocmd filetype rmd nmap <localleader>rc /```<Enter>NjVnky<C-W>l<C-W>"0<C-W>h
 	autocmd filetype rmd vmap <localleader>r y<C-W>l<C-W>"0<C-W>h
-	autocmd filetype rmd nnoremap <localleader>rc :-1read $HOME/dotfiles/templates/rmd_chunk.tmpl<CR>ji
+	autocmd filetype rmd nnoremap <localleader>ic :-1read $HOME/dotfiles/templates/rmd_chunk.tmpl<CR>ji
 augroup END
 
 augroup filetype_sql
