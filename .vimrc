@@ -1,8 +1,6 @@
 set nocompatible
 filetype off
 
-" let g:airline_theme='gruvbox'
-
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
@@ -77,73 +75,32 @@ set splitright
 
 nnoremap <Leader>v :source ~/.vimrc<CR>
 
-function! CursorChar()
-	return matchstr(getline('.'), '\%' . col('.') . 'c.')
-endfunction
-
-function! PrevChar()
-	return matchstr(getline('.'), '\%' . (col('.') - 1) . 'c.')
-endfunction
-
-function! IsBracketBlock(c)
-	let matching = ""
-	if a:c == "}"
-		let matching = "{"
-	elseif a:c == ")"
-		let matching = "("
-	elseif a:c == "]"
-		let matching = "["
-	endif
-	return matching != "" && (CursorChar() == a:c && PrevChar() == matching)
-endfunction
-
-function! IsBracketBlockAny()
-	return IsBracketBlock("}") || IsBracketBlock(")") || IsBracketBlock("]")
-endfunction
-
-inoremap <expr> <Enter> IsBracketBlockAny() ? '<Enter><Enter><Esc>ki<Tab>' : '<Enter>'
-
-tnoremap <localleader><Esc> <C-\><C-n>
-
-augroup filetype_md
-	autocmd!
-	autocmd filetype markdown set wrap
-	autocmd filetype markdown setlocal spell spelllang=en,el
-	autocmd filetype markdown set cc=
-	autocmd filetype markdown syn region math start=/\$\$/ end=/\$\$/
-	autocmd filetype markdown syn match math '\$[^$].\{-}\$'
-	autocmd filetype markdown hi link math Statement
-	autocmd filetype markdown set shell=bash
-	autocmd filetype markdown nmap <localleader>t :vertical terminal<Enter><C-W>h
-augroup END
-
-augroup filetype_r
-	autocmd!
-	autocmd filetype r set nowrap
-	autocmd filetype r nnoremap <localleader>q :qa!<Enter>
-	autocmd filetype r set shell=R
-	autocmd filetype r nnoremap <localleader>t :vertical terminal<Enter><C-W>h
-	autocmd filetype r nnoremap <localleader>r yy<C-W>l<C-W>"0<C-W>h
-	autocmd filetype r vnoremap <localleader>r y<C-W>l<C-W>"0<C-W>h
-	autocmd filetype r nnoremap <localleader>s :let @"=@%<Enter><C-W>lsource("<C-W>"0")<Enter><C-W>h
-	autocmd filetype r nnoremap <localleader>p :let @"=expand("<cword>")<Enter><C-W>l<C-W>"0<Enter><C-W>h
-	autocmd filetype r nnoremap <localleader>h :let @"=expand("<cword>")<Enter><C-W>lhead(<C-W>"0)<Enter><C-W>h
-	" autocmd filetype r imap { {}<Esc>i
-	autocmd filetype r inoremap <expr> { CursorChar() == "" ? '{}<Esc>i' : '{'
-	autocmd filetype r inoremap <expr> ( CursorChar() == "" ? '()<Esc>i' : '('
-	autocmd filetype r inoremap <expr> [ CursorChar() == "" ? '[]<Esc>i' : '['
-	" autocmd filetype r tnoremap <localleader><Esc> <C-\><C-n>
-augroup END
-
-" nnoremap <Leader>r 0"ay$:exe "silent !tmux send-keys -t right '" . @a . "' 'Enter'" \| redraw!<CR>
-
+" augroup filetype_r
+	" autocmd!
+	" autocmd filetype r set nowrap
+	" autocmd filetype r nnoremap <localleader>q :qa!<Enter>
+	" autocmd filetype r set shell=R
+	" autocmd filetype r nnoremap <localleader>t :vertical terminal<Enter><C-W>h
+	" autocmd filetype r nnoremap <localleader>r yy<C-W>l<C-W>"0<C-W>h
+	" autocmd filetype r vnoremap <localleader>r y<C-W>l<C-W>"0<C-W>h
+	" autocmd filetype r nnoremap <localleader>s :let @"=@%<Enter><C-W>lsource("<C-W>"0")<Enter><C-W>h
+	" autocmd filetype r nnoremap <localleader>p :let @"=expand("<cword>")<Enter><C-W>l<C-W>"0<Enter><C-W>h
+	" autocmd filetype r nnoremap <localleader>h :let @"=expand("<cword>")<Enter><C-W>lhead(<C-W>"0)<Enter><C-W>h
+	" " autocmd filetype r imap { {}<Esc>i
+	" autocmd filetype r inoremap <expr> { CursorChar() == "" ? '{}<Esc>i' : '{'
+	" autocmd filetype r inoremap <expr> ( CursorChar() == "" ? '()<Esc>i' : '('
+	" autocmd filetype r inoremap <expr> [ CursorChar() == "" ? '[]<Esc>i' : '['
+	" " autocmd filetype r tnoremap <localleader><Esc> <C-\><C-n>
+" augroup END
 
 function! TmuxSendKeys(cmd)
-	execute "silent !tmux send-keys -t right " . a:cmd | redraw!
+	" execute "silent !tmux send-keys -t right -l \"" . a:cmd . "\" \\; send-keys -t right Enter"
+	execute "silent !tmux send-keys -t right " . a:cmd
+	redraw!
 endfunction
 
 function! CurrentLineToTmux() 
-	let l:cmd .= "'" . getline(".") . "' 'Enter' "
+	let l:cmd = "'" . getline(".") . "' 'Enter' "
 	call TmuxSendKeys(l:cmd)
 endfunction
 
@@ -155,83 +112,35 @@ function! VisualToTmux()
 	call TmuxSendKeys(l:cmd)
 endfunction
 
+
+
+" ==============================================================================
+" R support
+" ==============================================================================
+
 function! TmuxSourceR()
 	call TmuxSendKeys("'source(\"" . @% . "\")' 'Enter'")
 endfunction
 
-" augroup filetype_r
-	" autocmd!
-	" autocmd filetype r set nowrap
-	" autocmd filetype r nnoremap <localleader>r :<C-U>call CurrentLineToTmux()<CR>
-	" autocmd filetype r vnoremap <localleader>r :<C-U>call VisualToTmux()<CR>
-	" " autocmd filetype r nmap <localleader>s :let @"=@%<Enter><C-W>lsource("<C-W>"0")<Enter><C-W>h
-	" " autocmd filetype r nmap <localleader>p :let @"=expand("<cword>")<Enter><C-W>l<C-W>"0<Enter><C-W>h
-	" " autocmd filetype r nmap <localleader>h :let @"=expand("<cword>")<Enter><C-W>lhead(<C-W>"0)<Enter><C-W>h
-	" " " autocmd filetype r imap { {}<Esc>i
-	" " autocmd filetype r imap <expr> { CursorChar() == "" ? '{}<Esc>i' : '{'
-	" " autocmd filetype r imap <expr> ( CursorChar() == "" ? '()<Esc>i' : '('
-	" " autocmd filetype r imap <expr> [ CursorChar() == "" ? '[]<Esc>i' : '['
-	" " " autocmd filetype r tnoremap <localleader><Esc> <C-\><C-n>
-" augroup END
+function! TmuxPrintR()
+	call TmuxSendKeys("'print(" . expand("<cword>") . ")' 'Enter'")
+endfunction
 
-" vnoremap <Leader>r :<C-U>call VisualToTmux()<CR>
-" nnoremap <Leader>s :<C-U>call TmuxSourceR()<CR>
-
-augroup filetype_rmd
+augroup filetype_r
 	autocmd!
-	autocmd filetype rmd set wrap
-	autocmd filetype rmd setlocal spell spelllang=en,el
-	autocmd filetype rmd nmap <localleader>q :qa!<Enter>
-	autocmd filetype rmd set shell=R
-	autocmd filetype rmd nmap <localleader>t :vertical terminal<Enter><C-W>h
-	autocmd filetype rmd nnoremap <localleader>rmd :-1read $HOME/dotfiles/templates/rmd.tmpl<CR>jwwa
-	autocmd filetype rmd nmap <localleader>s :let @"=@%<Enter><C-W>lrmarkdown::render("<C-W>"0", output_dir = "output")<Enter><C-W>h
-	autocmd filetype rmd nmap <localleader>rr yy<C-W>l<C-W>"0<C-W>h
-	autocmd filetype rmd nmap <localleader>rc /```<Enter>NjVnky<C-W>l<C-W>"0<C-W>h
-	autocmd filetype rmd vmap <localleader>r y<C-W>l<C-W>"0<C-W>h
-	autocmd filetype rmd nnoremap <localleader>ic :-1read $HOME/dotfiles/templates/rmd_chunk.tmpl<CR>ji
+	autocmd filetype r set nowrap
+	autocmd filetype r nnoremap <localleader>s :call TmuxSourceR()<CR>
+	autocmd filetype r nnoremap <localleader>r :call CurrentLineToTmux()<CR>
+	autocmd filetype r vnoremap <localleader>r :<C-U>call VisualToTmux()<CR>
+	autocmd filetype r nnoremap <localleader>p :call TmuxPrintR()<CR>
 augroup END
 
-augroup filetype_sql
-	autocmd!
-	autocmd filetype sql set nowrap
-	autocmd filetype sql nmap <localleader>q :qa!<Enter>
-	autocmd filetype sql set shell=bash
-	autocmd filetype sql nmap <localleader>t :vertical terminal<Enter>psql "dbname=mimic user=elias options=--search_path=mimiciii"<Enter><C-W>h
-	autocmd filetype sql nmap <localleader>r yy<C-W>l<C-W>"0<C-W>h
-	autocmd filetype sql vmap <localleader>r y<C-W>l<C-W>"0<C-W>h
-	autocmd filetype sql nmap <localleader>s :let @"=@%<Enter><C-W>l\include <C-W>"0<Enter><C-W>h
-	autocmd filetype sql nmap <localleader>p :let @"=expand("<cword>")<Enter><C-W>lSELECT * FROM <C-W>"0 LIMIT 10;<Enter><C-W>h
-	autocmd filetype sql nnoremap <localleader>v :-1read $HOME/dotfiles/templates/sql_create_view.tmpl<CR>4w
-augroup END
 
-augroup filetype_python
-	autocmd!
-	autocmd filetype python set nowrap
-	autocmd filetype python nmap <localleader>q :qa!<Enter>
-	autocmd filetype python set shell=python
-	autocmd filetype python nmap <localleader>t :vertical terminal<Enter><C-W>h
-	autocmd filetype python nmap <localleader>r yy<C-W>l<C-W>"0<C-W>h
-	autocmd filetype python vmap <localleader>r y<C-W>l<C-W>"0<C-W>h
-	autocmd filetype python nmap <localleader>s :let @"=@%<Enter><C-W>lexec(open("<C-W>"0").read())<Enter><C-W>h
-	autocmd filetype python nmap <localleader>p :let @"=expand("<cword>")<Enter><C-W>l<C-W>"0<Enter><C-W>h
-augroup END
+" nnoremap <localleader>r :call CurrentLineToTmux()<CR>
+" vnoremap <localleader>r :<C-U>call VisualToTmux()<CR>
 
-augroup filetype_julia
-	autocmd!
-	autocmd filetype julia set shell=julia
-	autocmd filetype julia nmap <localleader>t :vertical terminal<Enter><C-W>h
-	autocmd filetype julia nmap <localleader>s :let @"=@%<Enter><C-W>linclude("<C-W>"0")<Enter><C-W>h
-	autocmd filetype julia nmap <localleader>q :qa!<Enter>
-augroup END
 
-augroup filetype_html
-	autocmd!
-	autocmd filetype html nnoremap <localleader>html :-1read $HOME/dotfiles/templates/html.tmpl<CR>3jwf>a
-augroup END
 
-augroup filetype_js
-	autocmd!
-	autocmd filetype javascript nnoremap <localleader>d3 :-1read $HOME/dotfiles/templates/d3js.tmpl<CR>3jmd6jms7jmc'd
-augroup END
+
+
 
