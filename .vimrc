@@ -75,15 +75,17 @@ tnoremap <C-J> <C-W>j
 
 set splitright
 
-function CursorChar()
+nnoremap <Leader>v :source ~/.vimrc<CR>
+
+function! CursorChar()
 	return matchstr(getline('.'), '\%' . col('.') . 'c.')
 endfunction
 
-function PrevChar()
+function! PrevChar()
 	return matchstr(getline('.'), '\%' . (col('.') - 1) . 'c.')
 endfunction
 
-function IsBracketBlock(c)
+function! IsBracketBlock(c)
 	let matching = ""
 	if a:c == "}"
 		let matching = "{"
@@ -95,7 +97,7 @@ function IsBracketBlock(c)
 	return matching != "" && (CursorChar() == a:c && PrevChar() == matching)
 endfunction
 
-function IsBracketBlockAny()
+function! IsBracketBlockAny()
 	return IsBracketBlock("}") || IsBracketBlock(")") || IsBracketBlock("]")
 endfunction
 
@@ -118,38 +120,62 @@ augroup END
 augroup filetype_r
 	autocmd!
 	autocmd filetype r set nowrap
-	autocmd filetype r nmap <localleader>q :qa!<Enter>
+	autocmd filetype r nnoremap <localleader>q :qa!<Enter>
 	autocmd filetype r set shell=R
-	autocmd filetype r nmap <localleader>t :vertical terminal<Enter><C-W>h
-	autocmd filetype r nmap <localleader>r yy<C-W>l<C-W>"0<C-W>h
-	autocmd filetype r vmap <localleader>r y<C-W>l<C-W>"0<C-W>h
-	autocmd filetype r nmap <localleader>s :let @"=@%<Enter><C-W>lsource("<C-W>"0")<Enter><C-W>h
-	autocmd filetype r nmap <localleader>p :let @"=expand("<cword>")<Enter><C-W>l<C-W>"0<Enter><C-W>h
-	autocmd filetype r nmap <localleader>h :let @"=expand("<cword>")<Enter><C-W>lhead(<C-W>"0)<Enter><C-W>h
+	autocmd filetype r nnoremap <localleader>t :vertical terminal<Enter><C-W>h
+	autocmd filetype r nnoremap <localleader>r yy<C-W>l<C-W>"0<C-W>h
+	autocmd filetype r vnoremap <localleader>r y<C-W>l<C-W>"0<C-W>h
+	autocmd filetype r nnoremap <localleader>s :let @"=@%<Enter><C-W>lsource("<C-W>"0")<Enter><C-W>h
+	autocmd filetype r nnoremap <localleader>p :let @"=expand("<cword>")<Enter><C-W>l<C-W>"0<Enter><C-W>h
+	autocmd filetype r nnoremap <localleader>h :let @"=expand("<cword>")<Enter><C-W>lhead(<C-W>"0)<Enter><C-W>h
 	" autocmd filetype r imap { {}<Esc>i
-	autocmd filetype r imap <expr> { CursorChar() == "" ? '{}<Esc>i' : '{'
-	autocmd filetype r imap <expr> ( CursorChar() == "" ? '()<Esc>i' : '('
-	autocmd filetype r imap <expr> [ CursorChar() == "" ? '[]<Esc>i' : '['
+	autocmd filetype r inoremap <expr> { CursorChar() == "" ? '{}<Esc>i' : '{'
+	autocmd filetype r inoremap <expr> ( CursorChar() == "" ? '()<Esc>i' : '('
+	autocmd filetype r inoremap <expr> [ CursorChar() == "" ? '[]<Esc>i' : '['
 	" autocmd filetype r tnoremap <localleader><Esc> <C-\><C-n>
 augroup END
 
-augroup filetype_r
-	autocmd!
-	autocmd filetype r set nowrap
-	autocmd filetype r nmap <localleader>q :qa!<Enter>
-	autocmd filetype r set shell=R
-	autocmd filetype r nmap <localleader>t :vertical terminal<Enter><C-W>h
-	autocmd filetype r nmap <localleader>r yy<C-W>l<C-W>"0<C-W>h
-	autocmd filetype r vmap <localleader>r y<C-W>l<C-W>"0<C-W>h
-	autocmd filetype r nmap <localleader>s :let @"=@%<Enter><C-W>lsource("<C-W>"0")<Enter><C-W>h
-	autocmd filetype r nmap <localleader>p :let @"=expand("<cword>")<Enter><C-W>l<C-W>"0<Enter><C-W>h
-	autocmd filetype r nmap <localleader>h :let @"=expand("<cword>")<Enter><C-W>lhead(<C-W>"0)<Enter><C-W>h
-	" autocmd filetype r imap { {}<Esc>i
-	autocmd filetype r imap <expr> { CursorChar() == "" ? '{}<Esc>i' : '{'
-	autocmd filetype r imap <expr> ( CursorChar() == "" ? '()<Esc>i' : '('
-	autocmd filetype r imap <expr> [ CursorChar() == "" ? '[]<Esc>i' : '['
-	" autocmd filetype r tnoremap <localleader><Esc> <C-\><C-n>
-augroup END
+" nnoremap <Leader>r 0"ay$:exe "silent !tmux send-keys -t right '" . @a . "' 'Enter'" \| redraw!<CR>
+
+
+function! TmuxSendKeys(cmd)
+	execute "silent !tmux send-keys -t right " . a:cmd | redraw!
+endfunction
+
+function! CurrentLineToTmux() 
+	let l:cmd .= "'" . getline(".") . "' 'Enter' "
+	call TmuxSendKeys(l:cmd)
+endfunction
+
+function! VisualToTmux()
+	let l:cmd = ""
+	for l:line in getline(line("'<"), line("'>"))
+		let l:cmd .= "'" . l:line . "' 'Enter' "
+	endfor
+	call TmuxSendKeys(l:cmd)
+endfunction
+
+function! TmuxSourceR()
+	call TmuxSendKeys("'source(\"" . @% . "\")' 'Enter'")
+endfunction
+
+" augroup filetype_r
+	" autocmd!
+	" autocmd filetype r set nowrap
+	" autocmd filetype r nnoremap <localleader>r :<C-U>call CurrentLineToTmux()<CR>
+	" autocmd filetype r vnoremap <localleader>r :<C-U>call VisualToTmux()<CR>
+	" " autocmd filetype r nmap <localleader>s :let @"=@%<Enter><C-W>lsource("<C-W>"0")<Enter><C-W>h
+	" " autocmd filetype r nmap <localleader>p :let @"=expand("<cword>")<Enter><C-W>l<C-W>"0<Enter><C-W>h
+	" " autocmd filetype r nmap <localleader>h :let @"=expand("<cword>")<Enter><C-W>lhead(<C-W>"0)<Enter><C-W>h
+	" " " autocmd filetype r imap { {}<Esc>i
+	" " autocmd filetype r imap <expr> { CursorChar() == "" ? '{}<Esc>i' : '{'
+	" " autocmd filetype r imap <expr> ( CursorChar() == "" ? '()<Esc>i' : '('
+	" " autocmd filetype r imap <expr> [ CursorChar() == "" ? '[]<Esc>i' : '['
+	" " " autocmd filetype r tnoremap <localleader><Esc> <C-\><C-n>
+" augroup END
+
+" vnoremap <Leader>r :<C-U>call VisualToTmux()<CR>
+" nnoremap <Leader>s :<C-U>call TmuxSourceR()<CR>
 
 augroup filetype_rmd
 	autocmd!
