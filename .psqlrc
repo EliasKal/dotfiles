@@ -1,0 +1,4 @@
+\pset pager 0
+\pset format wrapped
+SET client_min_messages TO WARNING;
+
