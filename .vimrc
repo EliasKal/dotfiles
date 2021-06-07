@@ -130,6 +130,25 @@ augroup filetype_r
 	autocmd filetype r tnoremap <localleader><Esc> <C-\><C-n>
 augroup END
 
+augroup filetype_python
+	autocmd!
+	autocmd filetype python set nowrap
+	autocmd filetype python nmap <localleader>q :qa!<Enter>
+	autocmd filetype python set shell=python
+	autocmd filetype python nmap <localleader>t :vertical terminal<Enter><C-W>h
+	autocmd filetype python nmap <localleader>r yy<C-W>l<C-W>"0<C-W>h
+	autocmd filetype python vmap <localleader>r y<C-W>l<C-W>"0<C-W>h
+	" autocmd filetype python nmap <localleader>s :let @"=@%<Enter><C-W>lexecfile("<C-W>"0")<Enter><C-W>h
+	autocmd filetype python nmap <localleader>s :let @"=@%<Enter><C-W>lexec(open("<C-W>"0").read())<Enter><C-W>h
+	autocmd filetype python nmap <localleader>p :let @"=expand("<cword>")<Enter><C-W>l<C-W>"0<Enter><C-W>h
+	" autocmd filetype r nmap <localleader>h :let @"=expand("<cword>")<Enter><C-W>lhead(<C-W>"0)<Enter><C-W>h
+	" " autocmd filetype r imap { {}<Esc>i
+	" autocmd filetype r imap <expr> { CursorChar() == "" ? '{}<Esc>i' : '{'
+	" autocmd filetype r imap <expr> ( CursorChar() == "" ? '()<Esc>i' : '('
+	" autocmd filetype r imap <expr> [ CursorChar() == "" ? '[]<Esc>i' : '['
+	autocmd filetype python tnoremap <localleader><Esc> <C-\><C-n>
+augroup END
+
 augroup filetype_julia
 	autocmd!
 	autocmd filetype julia set shell=julia
