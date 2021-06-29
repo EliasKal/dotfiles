@@ -75,6 +75,23 @@ tnoremap <C-J> <C-W>j
 
 set splitright
 
+
+" nnoremap <Leader>mimic
+	" \ :e src/analysis/logistic.R<CR>
+	" \ :vertical terminal<CR>
+	" \ source("src/data_retrieval/connect.R")<CR><C-W>h
+	" \ :tabnew src/data_retrieval/gather_glycemic_data_2.sql<CR>
+	" \ :vertical terminal<CR>
+	" \ psql "dbname=mimic user=kalamar options=--search_path=mimiciii"<CR><C-W>h
+	" \ gT<C-W>l
+	
+
+function! SessionMimic()
+	echom "MIMIC"
+	execute "e src/analysis/logistic.R"
+	execute "vertical terminal"
+endfunction
+
 nnoremap <Leader>v :source ~/.vimrc<CR>
 
 function! CursorChar()
@@ -251,6 +268,6 @@ augroup END
 
 augroup filetype_js
 	autocmd!
-	autocmd filetype javascript nnoremap <localleader>d3 :-1read $HOME/dotfiles/templates/d3js.tmpl<CR>3jmd6jms7jmc'd
+	autocmd filetype javascript nnoremap <localleader>d3 :-1read $HOME/dotfiles/templates/d3js.tmpl<CR>3jmd6jms7jmcgg=G'd
 augroup END
 
