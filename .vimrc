@@ -266,8 +266,8 @@ augroup filetype_html
 	autocmd filetype html nnoremap <localleader>html :-1read $HOME/dotfiles/templates/html.tmpl<CR>3jwf>a
 augroup END
 
-augroup filetype_js
-	autocmd!
-	autocmd filetype javascript nnoremap <localleader>d3 :-1read $HOME/dotfiles/templates/d3js.tmpl<CR>3jmd6jms7jmcgg=G'd
-augroup END
+" augroup filetype_js
+	" autocmd!
+	" autocmd filetype javascript nnoremap <localleader>d3 :-1read $HOME/dotfiles/templates/d3js.tmpl<CR>3jmd6jms7jmcgg=G'd
+" augroup END
 
