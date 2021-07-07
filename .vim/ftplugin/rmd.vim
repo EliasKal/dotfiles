@@ -9,6 +9,6 @@ nnoremap <localleader>rc /```<Enter>NjVnky<C-W>l<C-W>"0<C-W>h
 vnoremap <localleader>r y<C-W>l<C-W>"0<C-W>h
 
 " Snippets
-nnoremap <localleader>rmd :-1read $HOME/dotfiles/templates/rmd.tmpl<CR>jwwa
-nnoremap <localleader>ic :-1read $HOME/dotfiles/templates/rmd_chunk.tmpl<CR>ji
+nnoremap <localleader>rmd :-1read $HOME/dotfiles/.vim/templates/rmd.tmpl<CR>jwwa
+nnoremap <localleader>ic :-1read $HOME/dotfiles/.vim/templates/rmd_chunk.tmpl<CR>ji
 
