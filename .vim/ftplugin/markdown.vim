@@ -5,5 +5,5 @@ syn region math start=/\$\$/ end=/\$\$/
 syn match math '\$[^$].\{-}\$'
 hi link math Statement
 setlocal shell=bash
-nmap <localleader>t :vertical terminal<Enter><C-W>h
+noremap <localleader>t :vertical terminal<Enter><C-W>h
 
