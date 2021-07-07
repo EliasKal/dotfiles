@@ -8,7 +8,7 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'preservim/nerdtree'
+" Plugin 'preservim/nerdtree'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'morhetz/gruvbox'
@@ -43,6 +43,7 @@ set noswapfile
 set hlsearch
 set incsearch
 set ignorecase
+set scrolloff=7
 
 noremap <silent> k gk
 noremap <silent> j gj
@@ -59,6 +60,9 @@ let g:gruvbox_guisp_fallback='bg'	" enable spell check highlight
 colorscheme gruvbox
 set background=dark
 set termguicolors
+
+" highlight! Normal guibg=NONE ctermbg=NONE
+" highlight! NonText guibg=NONE ctermbg=NONE
 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
@@ -121,6 +125,18 @@ endfunction
 inoremap <expr> <Enter> IsBracketBlockAny() ? '<Enter><Enter><Esc>ki<Tab>' : '<Enter>'
 
 tnoremap <localleader><Esc> <C-\><C-n>
+
+function! StartServer()
+	silent !python -u -m http.server > server.log 2>&1 & echo $\! > server.pid
+	redraw!
+	echo "HTTP server started at http://localhost:8000."
+endfunction
+
+function! StopServer()
+	silent !kill $(cat server.pid)
+	redraw!
+	echo "HTTP server stopped."
+endfunction
 
 augroup filetype_md
 	autocmd!
@@ -270,4 +286,5 @@ augroup END
 	" autocmd!
 	" autocmd filetype javascript nnoremap <localleader>d3 :-1read $HOME/dotfiles/templates/d3js.tmpl<CR>3jmd6jms7jmcgg=G'd
 " augroup END
+
 
