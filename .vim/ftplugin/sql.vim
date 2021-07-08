@@ -8,5 +8,5 @@ nnoremap <localleader>s :let @"=@%<Enter><C-W>l\include <C-W>"0<Enter><C-W>h
 nnoremap <localleader>p :let @"=expand("<cword>")<Enter><C-W>lSELECT * FROM <C-W>"0 LIMIT 10;<Enter><C-W>h
 
 " Snippets
-nnoremap <localleader>v :-1read $HOME/dotfiles/templates/sql_create_view.tmpl<CR>4w
+nnoremap <localleader>v :-1read $HOME/dotfiles/.vim/templates/sql_create_view.tmpl<CR>4w
 
