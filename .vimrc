@@ -77,6 +77,13 @@ tnoremap <C-L> <C-W>l
 tnoremap <C-K> <C-W>k
 tnoremap <C-J> <C-W>j
 
+" Map Ctrl plus arrows to resize split
+" From: https://github.com/alepapadop/vimrc/blob/master/vimrc
+nnoremap <C-LEFT> <C-w>2<
+nnoremap <C-RIGHT> <C-w>2>
+nnoremap <C-UP> <C-w>2+
+nnoremap <C-DOWN> <C-w>2-
+
 set splitright
 
 nnoremap <Leader>v :source ~/.vimrc<CR>
