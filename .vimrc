@@ -13,6 +13,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'morhetz/gruvbox'
 Plugin 'preservim/nerdcommenter'
+Plugin 'tpope/vim-liquid'
 
 call vundle#end()
 filetype plugin indent on
