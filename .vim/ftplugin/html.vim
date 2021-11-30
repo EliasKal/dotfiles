@@ -1,5 +1,5 @@
 " Snippets
-nnoremap <buffer> <localleader>html :-1read $HOME/dotfiles/.vim/templates/html.tmpl<CR>3jwf>a
+nnoremap <buffer> <localleader>html :-1read $HOME/dotfiles/.vim/templates/html.tmpl<CR>4jwf>a
 
 " Commands
 nnoremap <buffer> <localleader>up :call StartServer()<CR>
