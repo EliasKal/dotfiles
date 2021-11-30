@@ -61,6 +61,10 @@ colorscheme gruvbox
 set background=dark
 set termguicolors
 
+" highlight Normal     ctermbg=NONE guibg=NONE
+" highlight LineNr     ctermbg=NONE guibg=NONE
+" highlight SignColumn ctermbg=NONE guibg=NONE
+
 " highlight! Normal guibg=NONE ctermbg=NONE
 " highlight! NonText guibg=NONE ctermbg=NONE
 

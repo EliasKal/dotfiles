@@ -1,0 +1,129 @@
+function templatechart() {
+    // default parameter values
+    let width = 500,
+        height = 500,
+        leftPad = 30,
+        rightPad = 5,
+        topPad = 5,
+        bottomPad = 30,
+        pointRadius = 5,
+        xAcc = d => d.x,
+        yAcc = d => d.y;
+
+    function chart(selection) {
+        selection.each((data, i, nodes) => {
+            
+            // initialization
+            // ---------------------------------------------------
+
+            let container = d3.select(nodes[i]);
+
+            // create svg if it does not exist
+            let svgEnter = container.selectAll("svg")
+                .data([data])
+                .enter()
+                .append("svg")
+            
+            let svg = container.selectAll("svg")
+                .attr("width", width + leftPad + rightPad)
+                .attr("height", height + topPad + bottomPad)
+
+            let mainArea = svg
+                .append("g")
+                .attr("class", "chartContainer")
+                .attr("transform", `translate(${leftPad} ${topPad})`)
+
+
+            // scales
+            // ------------------------------------------------------
+
+            let xScale = d3.scaleLinear()
+                .domain(d3.extent(data, xAcc))
+                .range([0, width]);
+            
+            let yScale = d3.scaleLinear()
+                .domain(d3.extent(data, yAcc))
+                .range([height, 0]);
+            
+
+            // points
+            // ------------------------------------------------------
+
+            let points = mainArea.selectAll(".point")
+                .data(data)
+                .enter()
+                .append("circle")
+                    .attr("class", "point")
+                    .attr("cx", d => xScale(xAcc))
+                    .attr("cy", d => yScale(yAcc))
+                    .attr("r", pointRadius)
+                    .attr("fill", "steelblue")
+            
+            
+            // axes
+            // ------------------------------------------------------
+
+            let bottomAxis = svg
+                .append("g")
+                    .attr("class", "bottomAxis")
+                    .attr("transform", `translate(${leftPad}, ${topPad + height})`)
+                    .call(d3.axisBottom(xScale));
+            
+            let leftAxis = svg
+                .append("g")
+                    .attr("class", "leftAxis")
+                    .attr("transform", `translate(${leftPad}, ${topPad})`)
+                    .call(d3.axisLeft(yScale));
+        });
+    }
+
+    chart.width = function (value) {
+        if (!arguments.length) return width;
+        width = value;
+        return chart;
+    }
+
+    chart.height = function (value) {
+        if (!arguments.length) return height;
+        height = value;
+        return chart;
+    }
+
+    chart.leftPad = function (value) {
+        if (!arguments.length) return leftPad;
+        leftPad = value;
+        return chart;
+    }
+
+    chart.topPad = function (value) {
+        if (!arguments.length) return topPad;
+        topPad = value;
+        return chart;
+    }
+
+    chart.bottomPad = function (value) {
+        if (!arguments.length) return bottomPad;
+        bottomPad = value;
+        return chart;
+    }
+
+    chart.pointRadius = function (value) {
+        if (!arguments.length) return pointRadius;
+        pointRadius = value;
+        return chart;
+    }
+
+    chart.xAcc = function (value) {
+        if (!arguments.length) return xAttr;
+        xAttr = value;
+        return chart;
+    }
+
+    chart.yAcc = function (value) {
+        if (!arguments.length) return yAttr;
+        yAttr = value;
+        return chart;
+    }
+
+    return chart;
+}
