@@ -52,6 +52,31 @@ set scrolloff=7
 
 set cindent
 
+
+" Navigate function arguments ---------------------------------------
+
+function! ArgEnter()
+	execute "normal /(/e+1\<CR>"
+endfunction
+nnoremap <leader>z :call ArgEnter()<CR>
+
+function! ArgNext()
+	try
+		execute "normal %"
+	catch /.*/
+		echo "Caught error: " . v:exception
+	finally
+		execute "normal f,w"
+	endtry
+endfunction
+nnoremap <leader><Space> :call ArgNext()<CR>
+
+function! ArgExit()
+	execute "normal va(\<Esc>w"
+endfunction
+nnoremap <leader>x :call ArgExit()<CR>
+
+
 " Code folding
 set foldmethod=indent
 set foldlevel=99
