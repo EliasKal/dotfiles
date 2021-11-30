@@ -13,6 +13,7 @@ Plugin 'morhetz/gruvbox'
 Plugin 'preservim/nerdcommenter'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
+Plugin 'jiangmiao/auto-pairs'
 
 call vundle#end()
 filetype plugin indent on
@@ -41,6 +42,15 @@ set hlsearch
 set incsearch
 set ignorecase
 set scrolloff=7
+
+" " Automatic paired character completion
+" inoremap ( ()<Esc>i
+" inoremap { {}<Esc>i
+" inoremap [ []<Esc>i
+" inoremap " ""<Esc>i
+" inoremap ' ''<Esc>i
+
+set cindent
 
 " Code folding
 set foldmethod=indent
