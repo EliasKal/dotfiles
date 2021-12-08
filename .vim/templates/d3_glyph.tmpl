@@ -1,0 +1,60 @@
+// Example glyph -----------------------------------------------------
+
+/**
+ *   A   B       C
+ *                
+ *   ----|--------
+ *                
+ */
+
+function exampleGlyph() {
+
+	// Glyph parameters
+	let par = {
+		A: d => 0,
+		B: d => 10,
+		C: d => 20,
+		lineHeight: 8,
+		color: d => "lightsteelblue"
+	}
+
+	function chart(selection) {
+
+		// helper function
+		selection.addLine = function(x1, x2, y1, y2, stroke = par.color) {
+			selection
+				.append("line")
+					.attr("x1", x1)
+					.attr("x2", x2)
+					.attr("y1", y1)
+					.attr("y2", y2)
+					.attr("stroke", stroke)
+			return selection
+		}
+
+		// draw glyph
+
+		selection
+			.addLine(par.A, par.B, 0, 0)
+			.addLine(par.B, par.B, -par.lineHeight / 2, par.lineHeight / 2)
+			.addLine(par.B, par.C, 0, 0)
+	
+	}
+
+	// Create accessor functions
+	
+	function accessor(name) {
+		return function(value) {
+			if (!arguments.length) return par[name]
+			par[name] = value
+			return chart
+		}
+	}
+
+	for (key in par) {
+		chart[key] = accessor(key)
+	}
+
+	return chart
+}
+

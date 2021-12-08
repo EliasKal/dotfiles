@@ -1,0 +1,5 @@
+# Spell checking
+
+set spell
+set nospell
+
