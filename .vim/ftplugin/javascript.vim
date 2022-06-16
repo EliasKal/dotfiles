@@ -5,6 +5,7 @@ nnoremap <buffer> <localleader>re :-1read $HOME/dotfiles/.vim/templates/d3_reusa
 nnoremap <buffer> <localleader>gl :-1read $HOME/dotfiles/.vim/templates/d3_glyph.tmpl<CR>
 nnoremap <buffer> <localleader>ent :-1read $HOME/dotfiles/.vim/templates/d3_enter.tmpl<CR>=2jw
 nnoremap <buffer> <localleader>ci :-1read $HOME/dotfiles/.vim/templates/d3_circle.tmpl<CR>=6jj>5jt)
+nnoremap <buffer> <localleader>li :-1read $HOME/dotfiles/.vim/templates/d3_line.tmpl<CR>=8jj>7jt)b
 nnoremap <buffer> <localleader>te :-1read $HOME/dotfiles/.vim/templates/d3_text.tmpl<CR>=6jj>5jf"w
 nnoremap <buffer> <localleader>ax :-1read $HOME/dotfiles/.vim/templates/d3_axis.tmpl<CR>=4j2j>2j2kb
 
