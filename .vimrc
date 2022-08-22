@@ -14,7 +14,7 @@ Plugin 'morhetz/gruvbox'
 Plugin 'tpope/vim-commentary'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
-Plugin 'jiangmiao/auto-pairs'
+" Plugin 'jiangmiao/auto-pairs'
 
 call vundle#end()
 filetype plugin indent on
