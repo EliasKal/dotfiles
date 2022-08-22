@@ -29,11 +29,15 @@ let NERDTreeShowHidden=1
 syntax on
 set number
 " set relativenumber
+set expandtab
 set tabstop=4
+set softtabstop=4
 set shiftwidth=4
 " set textwidth=80
 set autoindent
 " set smartindent
+set backspace=indent,eol,start
+
 set nowrap
 set linebreak
 set cursorline
